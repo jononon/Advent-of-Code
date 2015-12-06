@@ -301,8 +301,8 @@ public class Day6 {
         "turn on 766,112 through 792,868",
         "turn on 222,12 through 856,241"};
         String[] input1 = {"turn on 0,0 through 999,999","toggle 0,0 through 999,0","turn off 499,499 through 500,500"};
-        
-        boolean[][] grid = new boolean[1000][1000];
+        String[] input2 = {"toggle 0,0 through 0,0"};
+        int[][] grid = new int[1000][1000];
         for(String in:input) {
             String instruction;
             int index;
@@ -326,20 +326,22 @@ public class Day6 {
             
             for (int i = startx; i<=endx; i++) {
                 for (int j = starty; j<=endy; j++) {
-                    if(instruction.equals("turn on"))
-                        grid[i][j] = true;
-                    else if (instruction.equals("turn off"))
-                        grid[i][j] = false;
-                    else if (instruction.equals("toggle"))
-                        grid[i][j] = !grid[i][j];
+                    if(instruction.equals("turn on")) {
+                        grid[i][j]++;
+                    } else if (instruction.equals("turn off")){
+                        if(grid[i][j]!=0) {
+                            grid[i][j]--;
+                        }
+                    } else if (instruction.equals("toggle")){
+                        grid[i][j]+=2;
+                    }
                 }
             }
         }
-        int count = 0;
+        int totalBrightness = 0;
         for(int i = 0; i<1000; i++)
             for(int j = 0; j<1000; j++)
-                if(grid[i][j])
-                    count++;
-        System.out.println(count);
+                totalBrightness+=grid[i][j];
+        System.out.println(totalBrightness);
     }
 }
